@@ -2,25 +2,25 @@ import java.util.*;
 import java.io.*;
 
 public class decimal_to_binary {
-    public static void main(String[] args) {
-
-
-
-
-
+    public static byte[] main(String[] args) {
         
+        String num_in = args[0];
+        int num=Integer.parseInt(num_in);  
+
+        byte[] binary = toBinary(num);        
         // --------- debugging ----------
-        System.out.println(countBits(2398));
-        System.out.println(toBinary(2398));
+        // System.out.println(countBits(num));
+        // System.out.println(toBinary(num));
 
-        byte[] binary = toBinary(2398);
+        // byte[] binary = toBinary(num);
 
-        // to display the binary number
-        for (int i = binary.length - 1; i >= 0; i--) {
-            System.out.print(binary[i]);
-        }
+        // // to display the binary number
+        // for (int i = binary.length - 1; i >= 0; i--) {
+        //     System.out.print(binary[i]);
+        // }
         // --------- end of debugging ----------
 
+        return binary;
     }
 
     // function to count the number of bits of a decimal
