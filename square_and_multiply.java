@@ -2,41 +2,62 @@ import java.util.*;
 
 public class square_and_multiply {
     public static void main(String[] args) {
-        // A = alpha^secret key(g) mod p
-        long r = squareMult(2399, 11);
+        Scanner scan = new Scanner(System.in);
 
-        System.out.println("\n" + r);
+        long p = 2399;
+        long alpha = 11;
+        // long key_private = 200;
+
+        // --------- private key ---------
+        System.out.print("Enter your private key: ");
+        long key_private = scan.nextLong();
+        // ------ end of privatee key ------
+
+        // ---------- generating public key ----------
+        long key_private_binary = getBinary(key_private);
+        long key_public = squareMult(p, alpha, key_private_binary);
+        System.out.println("The generated public key is " + key_public);
+        // ---------- generating public key ----------
+
+        // --------- exchanging key ---------
+        System.out.print("Enter the exhanged key: ");
+        long key_exhanged = scan.nextLong();
+        // ------ end of exchanging key ------
+
+        // ---------- generating secret key -----------
+        // long key_exchanged_binary = getBinary(key_exhanged);
+        long key_secret = squareMult(p, key_exhanged, key_private_binary);
+        // ------- end of generating secret key --------
+
+        System.out.println("Shared secret key: " + key_secret);
     }
 
-    public static int[] bytearrToIntarr(byte[] array_in, int size_in) {
-        int[] int_array = new int[size_in];
+    public static long getBinary(long key_in){
+         //--------- binary representation of alpha -----------
+         String[] param = new String[]{Long.toString(key_in)};
+         String key_b_string = decimal_to_binary.main(param);
+         //------ end of binary representation of alpha --------
 
-        for (int i = 0; i < size_in; i++) {
-            int_array[i] = (int) array_in[i];
-        }
+         long key_binary = Long.parseLong(key_b_string);
 
-        return int_array;
+         return key_binary;
     }
-
-    public static long squareMult(int p_in, int alpha_in){
-        int z = alpha_in;
-        long exp_in = 63;
-        // --------- get binary representation of p_in -----------
-        String[] param = new String[]{Long.toString(exp_in)};
-        String b_string = decimal_to_binary.main(param);
-        // ------ end of get binary representation of p_in --------
-
-        
-        int b_length = b_string.length();
-
-        for (int i = b_length-1; i >= 0; i--) {
-            z = (z*z) % p_in;
-
-            if (b_string.charAt(i) == '1') {
-                z = (z*alpha_in) % p_in;
-            }
-        }
-    
-        return z;
+  
+    static long squareMult(long p_in, long alpha_in, long private_key_in)
+    {
+        if (private_key_in == 0)
+            return 1;
+  
+        if (private_key_in == 1)
+            return (alpha_in % p_in);
+  
+        long temp = squareMult(p_in, alpha_in, private_key_in / 2);
+        temp = (temp * temp) % p_in;
+  
+        if (private_key_in % 2 == 0)
+            return temp;
+  
+        else
+            return ((alpha_in % p_in) * temp) % p_in;
     }
 }
