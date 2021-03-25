@@ -3,37 +3,40 @@ import java.util.*;
 public class square_and_multiply {
     public static void main(String[] args) {
         // A = alpha^secret key(g) mod p
+        long r = squareMult(2399, 11);
 
-        String[] param = new String[]{"2398"};
-        byte[] result = decimal_to_binary.main(param);
+        System.out.println("\n" + r);
+    }
 
-        // to display the binary number
-        for (int i = result.length - 1; i >= 0; i--) {
-            System.out.print(result[i]);
+    public static int[] bytearrToIntarr(byte[] array_in, int size_in) {
+        int[] int_array = new int[size_in];
+
+        for (int i = 0; i < size_in; i++) {
+            int_array[i] = (int) array_in[i];
         }
+
+        return int_array;
     }
 
-    public static void squareMult(int b_in, int p_in){
-        int z = 1;
+    public static long squareMult(int p_in, int alpha_in){
+        int z = alpha_in;
+        long exp_in = 63;
+        // --------- get binary representation of p_in -----------
+        String[] param = new String[]{Long.toString(exp_in)};
+        String b_string = decimal_to_binary.main(param);
+        // ------ end of get binary representation of p_in --------
 
+        
+        int b_length = b_string.length();
+
+        for (int i = b_length-1; i >= 0; i--) {
+            z = (z*z) % p_in;
+
+            if (b_string.charAt(i) == '1') {
+                z = (z*alpha_in) % p_in;
+            }
+        }
+    
+        return z;
     }
-
-    // public static long squareMult(int b_in, int p_in){
-    //     if (exp == 0)
-    //         return 1;
-  
-    //     if (exp == 1)
-    //         return base % N;
-  
-    //     long t = exponentiation(base, exp / 2);
-    //     t = (t * t) % N;
-  
-    //     // if exponent is even value
-    //     if (exp % 2 == 0)
-    //         return t;
-  
-    //     // if exponent is odd value
-    //     else
-    //         return ((base % N) * t) % N;
-    // }
 }
