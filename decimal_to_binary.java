@@ -20,12 +20,12 @@ public class decimal_to_binary {
     // function to convert decimal to binary
     public static String toBinary(int num_in) {
         String binaryResult = "";
-        String bit = "00000000000000000000000000000000";
+        // String bit = "00000000000000000000000000000000";
 
         String binString = Integer.toBinaryString((int) num_in);
-        binaryResult += (bit + binString).substring(binString.length());
+        // binaryResult += (bit + binString).substring(binString.length());
 
-        return binaryResult;
+        return binString;
     }
 
 
