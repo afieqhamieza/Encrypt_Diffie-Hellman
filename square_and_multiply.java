@@ -1,16 +1,16 @@
 import java.util.*;
 
 public class square_and_multiply {
-    public static void main(String[] args) {
+    public static long main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
         long p = 2399;
         long alpha = 11;
-        // long key_private = 200;
 
         // --------- private key ---------
-        System.out.print("Enter your private key: ");
-        long key_private = scan.nextLong();
+        // System.out.print("Enter your private key: ");
+        // long key_private = scan.nextLong();
+        long key_private = 200;
         // ------ end of privatee key ------
 
         // ---------- generating public key ----------
@@ -30,6 +30,7 @@ public class square_and_multiply {
         // ------- end of generating secret key --------
 
         System.out.println("Shared secret key: " + key_secret);
+        return key_secret;
     }
 
     public static long getBinary(long key_in){
